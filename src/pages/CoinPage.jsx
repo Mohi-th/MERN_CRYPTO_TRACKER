@@ -4,7 +4,8 @@ import { CryptoState } from "../context/CryptoContext"
 import axios from "axios"
 import { SingleCoin } from '../config/api'
 import CoinInfo from '../components/CoinInfo'
-import ReactHtmlParser from "react-html-parser"
+import parse from 'html-react-parser';
+
 
 
 function CoinPage() {
@@ -43,7 +44,7 @@ function CoinPage() {
           className='h-[200px]'
         />
         <h1 className='text-4xl font-semibold text-white'>{coin?.name}</h1>
-        <p className='text-white text-justify text-[18px]  leading-6 '> {ReactHtmlParser(coin?.description.en.split(".")[0])[0]}.</p>
+        <p className='text-white text-justify text-[18px]  leading-6 '> {parse(coin?.description.en.split(".")[0])[0]}.</p>
         <div className=' w-full'>
           <div>Rank : <span>{coin?.market_cap_rank}</span></div>
           <div>Current Price : <span>{currencySymbol}{" "}{formatNumberWithCommas(coin?.market_data.current_price[currency.toLowerCase()])}</span></div>
