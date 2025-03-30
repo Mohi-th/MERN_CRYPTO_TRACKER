@@ -16,8 +16,6 @@ function CoinPage() {
 
   const { currency, currencySymbol } = CryptoState();
 
-
-
   const fetchCoin = async () => {
     const { data } = await axios.get(SingleCoin(id), {
       headers: {
@@ -25,11 +23,13 @@ function CoinPage() {
         'x-cg-demo-api-key': 'CG-Ckha8hfHCujgZvvAneTQuuzF'
       }
     });
+    console.log(data, "data")
     setCoin(data)
   }
+
   function formatNumberWithCommas(number) {
     return number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  }
 
   useEffect(() => {
     fetchCoin();
@@ -44,17 +44,17 @@ function CoinPage() {
           className='h-[200px]'
         />
         <h1 className='text-4xl font-semibold text-white'>{coin?.name}</h1>
-        <p className='text-white text-justify text-[18px]  leading-6 '> {parse(coin?.description.en.split(".")[0])[0]}.</p>
+        <p className='text-white text-justify text-[18px]  leading-6 '> {parse(coin?.description.en.split(".")[0] + ".")}.</p>
         <div className=' w-full'>
           <div>Rank : <span>{coin?.market_cap_rank}</span></div>
           <div>Current Price : <span>{currencySymbol}{" "}{formatNumberWithCommas(coin?.market_data.current_price[currency.toLowerCase()])}</span></div>
           <div>Market Cap : <span>{currencySymbol}{" "}
-              {formatNumberWithCommas(
-                coin?.market_data.market_cap[currency.toLowerCase()]
-                  .toString()
-                  .slice(0, -6)
-              )}
-              M</span></div>
+            {formatNumberWithCommas(
+              coin?.market_data.market_cap[currency.toLowerCase()]
+                .toString()
+                .slice(0, -6)
+            )}
+            M</span></div>
         </div>
       </div>
       <CoinInfo coin={coin} />
